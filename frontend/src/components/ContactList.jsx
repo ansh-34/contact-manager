@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 export default function ContactList() {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,7 +11,7 @@ export default function ContactList() {
   {
     setLoading(true);
     try {
-      const res = await axios.get("http://localhost:5000/api/contacts");
+      const res = await axios.get(`${API_URL}/api/contacts`);
       setContacts(res.data);
     } finally {
       setLoading(false);
@@ -17,7 +19,7 @@ export default function ContactList() {
   };
 
   const deleteContact = async (id) => {
-    await axios.delete(`http://localhost:5000/api/contacts/${id}`);
+    await axios.delete(`${API_URL}/api/contacts/${id}`);
     fetchContacts();
   };
 
