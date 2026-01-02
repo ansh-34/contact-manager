@@ -1,9 +1,14 @@
 import { useState } from "react";
 import ContactForm from "./components/ContactForm";
 import ContactList from "./components/ContactList";
+import { useAuth } from "./context/AuthContext";
+import AuthPanel from "./components/auth/AuthPanel";
 
 export default function App() {
   const [refreshKey, setRefreshKey] = useState(0);
+  const { token, user, logout } = useAuth();
+
+  if (!token) return <AuthPanel />;
 
   return (
     <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-sky-50 text-slate-900">
@@ -18,6 +23,15 @@ export default function App() {
             <p className="text-slate-600">
               Save new people, keep your list tidy, and reach them quickly.
             </p>
+          </div>
+          <div className="flex items-center gap-3 text-sm text-slate-700">
+            <span className="font-semibold">{user?.email}</span>
+            <button
+              onClick={logout}
+              className="rounded-lg border border-slate-200 px-3 py-1.5 font-semibold text-slate-700 hover:border-sky-200 hover:text-sky-700 transition"
+            >
+              Logout
+            </button>
           </div>
         </header>
 

@@ -1,7 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
-
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+import api from "../lib/api";
 
 export default function ContactForm({ onSuccess }) {
   const [form, setForm] = useState({
@@ -60,7 +58,7 @@ export default function ContactForm({ onSuccess }) {
     setErrors({});
     setLoading(true);
     try {
-      await axios.post(`${API_URL}/api/contacts`, form);
+      await api.post(`/api/contacts`, form);
       setForm({ name: "", email: "", phone: "", message: "" });
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);

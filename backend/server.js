@@ -5,6 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 import contactRoutes from "./routes/contactRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.join(__dirname, ".env") });
@@ -16,6 +17,7 @@ const allowedOrigins = (process.env.FRONTEND_ORIGIN || "http://localhost:5173").
 app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
+app.use("/api/auth", authRoutes);
 app.use("/api/contacts", contactRoutes);
 
 const port = process.env.PORT || 5000;
