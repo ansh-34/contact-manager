@@ -1,10 +1,17 @@
+
 import { createContext, useContext, useEffect, useState } from "react";
 import api, { setAuthToken } from "../lib/api";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(() => localStorage.getItem("token"));
+  const [token, setToken] = useState(() => {
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) {
+      setAuthToken(savedToken); // Set token immediately on init
+    }
+    return savedToken;
+  });
   const [user, setUser] = useState(() => {
     const raw = localStorage.getItem("user");
     return raw ? JSON.parse(raw) : null;
