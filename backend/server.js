@@ -11,7 +11,9 @@ dotenv.config({ path: path.join(__dirname, ".env") });
 connectDB();
 
 const app = express();
-app.use(cors());
+
+const allowedOrigins = (process.env.FRONTEND_ORIGIN || "http://localhost:5173").split(",").map(o => o.trim());
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 app.use("/api/contacts", contactRoutes);
